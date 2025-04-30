@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Checkout SCM'){
       steps {
-        sh 'git clone https://github.com/Vincent-Murienne/projet-dev01.git'
+        git credentialsId: 'id-user-github', url: 'https://github.com/Vincent-Murienne/projet-dev01.git'
       }
     }
     stage('Build image docker'){
@@ -22,7 +22,7 @@ pipeline {
     stage('Deploiement application'){
       steps {
         script {
-          sh 'docker rm image mynginx'
+          sh 'docker image rm mynginx'
           sh 'docker rm -f $(docker ps -a)'
           sh 'docker run -d --name monapp --hostname monapp -p 8099:80 myimage_nginx'
         }
