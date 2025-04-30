@@ -16,14 +16,15 @@ pipeline {
         script {
           sh 'docker build -t myimage_nginx .'
           sh 'docker tag myimage_nginx vincentm:myimage_nginx'
+          sh 'docker images'
         }
       }
     }
     stage('Deploiement application'){
       steps {
         script {
-          sh 'docker image rm mynginx'
-          sh 'docker rm -f $(docker ps -a)'
+          sh 'docker rm -f $(docker ps -aq) || true'
+          sh 'docker image rm -f myimage_nginx || true'
           sh 'docker run -d --name monapp --hostname monapp -p 8099:80 myimage_nginx'
         }
       }
