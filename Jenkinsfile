@@ -24,7 +24,6 @@ pipeline {
       steps {
         script {
           sh 'docker rm -f $(docker ps -aq) || true'
-          sh 'docker image rm -f myimage_nginx || true'
           sh 'docker run -d --name monapp --hostname monapp -p 8099:80 myimage_nginx'
         }
       }
